@@ -15,7 +15,7 @@ module load python/3.11.5
 module load rdkit/2023.09.3
 module load cuda/12.2
 
-export LD_LIBRARY_PATH=/home/e1444/.local/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=~/.local/lib:$LD_LIBRARY_PATH
 
 virtualenv --no-download --system-site-packages ENV --python=python3.11
 source ENV/bin/activate
@@ -23,7 +23,7 @@ source ENV/bin/activate
 pip install -r requirements.txt
 pip install -e .
 
-CHECKPOINT_DIR="/home/e1444/repos/DiGress/checkpoints/moses"
+CHECKPOINT_DIR="~/repos/DiGress/checkpoints/moses"
 CHECKPOINT_FILE="$CHECKPOINT_DIR/moses_last-v1.ckpt"
 
 if [ ! -f "$CHECKPOINT_FILE" ]; then
