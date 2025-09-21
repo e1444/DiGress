@@ -23,7 +23,7 @@ source ENV/bin/activate
 pip install -r requirements.txt
 pip install -e .
 
-CHECKPOINT_DIR="~/repos/DiGress/checkpoints/moses"
+CHECKPOINT_DIR="checkpoints/moses"
 CHECKPOINT_FILE="$CHECKPOINT_DIR/moses_last-v1.ckpt"
 
 if [ ! -f "$CHECKPOINT_FILE" ]; then
