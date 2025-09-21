@@ -4,6 +4,7 @@ import pathlib
 import warnings
 
 import torch
+torch.set_float32_matmul_precision('high')
 torch.cuda.empty_cache()
 import hydra
 from omegaconf import DictConfig
@@ -150,14 +151,14 @@ def main(cfg: DictConfig):
     else:
         raise NotImplementedError("Unknown dataset {}".format(cfg["dataset"]))
 
-    if cfg.general.test_only:
+    # When resuming, we can override some parts of previous configuration
+    if cfg.general.resume is not None:
+        cfg, _ = get_resume_adaptive(cfg, model_kwargs)
+        os.chdir(cfg.general.resume.split('checkpoints')[0])
+    elif cfg.general.test_only:
         # When testing, previous configuration is fully loaded
         cfg, _ = get_resume(cfg, model_kwargs)
         os.chdir(cfg.general.test_only.split('checkpoints')[0])
-    elif cfg.general.resume is not None:
-        # When resuming, we can override some parts of previous configuration
-        cfg, _ = get_resume_adaptive(cfg, model_kwargs)
-        os.chdir(cfg.general.resume.split('checkpoints')[0])
 
     utils.create_folders(cfg)
 
